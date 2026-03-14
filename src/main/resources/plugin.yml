@@ -1,0 +1,17 @@
+name: MCVerify
+version: 1.0.0
+main: com.mcverify.MCVerifyPlugin
+api-version: 1.21
+description: Minecraft <-> Discord verification and chat bridge plugin
+author: MCVerify
+
+commands:
+  dc-verify:
+    description: Link your Minecraft account to Discord
+    usage: /dc-verify <code>
+    permission: mcverify.use
+
+permissions:
+  mcverify.use:
+    description: Allows a player to use /dc-verify
+    default: true

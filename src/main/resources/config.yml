@@ -1,0 +1,11 @@
+# MCVerify Plugin Configuration
+
+bridge:
+  # URL of the Python Discord bot bridge server
+  url: "http://eu-ey.purpify.host:26047"
+  # Must match BRIDGE_SECRET in the bot's .env file
+  secret: "RUNEMC100"
+
+# Port this plugin listens on for incoming !chat messages from the Discord bot
+# Must be open/accessible from the internet and added in your host's port settings
+listen-port: 26048
