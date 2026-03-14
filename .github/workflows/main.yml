@@ -1,0 +1,48 @@
+name: Build & Release MCVerify
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: ☕ Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+
+      - name: 🔨 Build with Maven
+        run: mvn clean package --no-transfer-progress
+
+      - name: 📦 Upload JAR as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MCVerify-Plugin
+          path: target/MCVerify-*.jar
+
+      - name: 🚀 Create Release (only on version tag)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: target/MCVerify-*.jar
+          name: "MCVerify ${{ github.ref_name }}"
+          body: |
+            ## MCVerify ${{ github.ref_name }}
+            
+            ### Installation
+            1. Download `MCVerify-*.jar` below
+            2. Drop it into your server's `plugins/` folder
+            3. Restart the server
+            4. Edit `plugins/MCVerify/config.yml`
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
